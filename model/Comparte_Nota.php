@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -58,7 +57,7 @@ class Comparte_nota{
    $arraytoret = array();
    $query='select *
      from Comparte_Nota
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -83,6 +82,10 @@ class Comparte_nota{
  public function save() {
     $this->destroy();
    $query = 'insert into Comparte_Nota (nota_id,user_id) values ("'.$this->getNota_id().'","'.$this->getUser_id().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into Comparte_Nota (user_id) values ("'.$this->getUser_id().'")';
    $this->driver->exec($query);
 }
 

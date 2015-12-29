@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -11,7 +10,8 @@ class Apunte{
  private $mat_id;
  private $anho_academico;
  private $apunte_name;
- private $file_name;
+ private $ruta;
+ private $user_id;
 
  public function Apunte($driver) {
  /* BE CARE the ORM and activeRecord functionality of boroto generted classes needs an Drive Class with a function exec that executes SQL queries and returns arrayassoc or arrays of arrayassoc */
@@ -19,7 +19,8 @@ class Apunte{
    $this->mat_id = null;
    $this->anho_academico = null;
    $this->apunte_name = null;
-   $this->file_name = null;
+   $this->ruta = null;
+   $this->user_id = null;
    $this->driver = $driver;
  }
 
@@ -29,7 +30,8 @@ class Apunte{
   $this->setMat_id($arrayassoc['mat_id']);
   $this->setAnho_academico($arrayassoc['anho_academico']);
   $this->setApunte_name($arrayassoc['apunte_name']);
-  $this->setFile_name($arrayassoc['file_name']);
+  $this->setRuta($arrayassoc['ruta']);
+  $this->setUser_id($arrayassoc['user_id']);
  }
 
 /* Getters... */
@@ -45,8 +47,11 @@ class Apunte{
  public function getApunte_name(){
    return $this->apunte_name;
  }
- public function getFile_name(){
-   return $this->file_name;
+ public function getRuta(){
+   return $this->ruta;
+ }
+ public function getUser_id(){
+   return $this->user_id;
  }
 
 /* Setters... */
@@ -62,8 +67,11 @@ class Apunte{
  public function setApunte_name($value){
    $this->apunte_name = $value;
  }
- public function setFile_name($value){
-   $this->file_name = $value;
+ public function setRuta($value){
+   $this->ruta = $value;
+ }
+ public function setUser_id($value){
+   $this->user_id = $value;
  }
 
 
@@ -81,17 +89,17 @@ class Apunte{
  }
 
  /* return an array containing all Apunte that key = value */
- public function findBy($key,$value){ 
+ public function findBy($key,$value){
    $arraytoret = array();
    $query='select *
      from Apunte
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
 
 /* returns an array of Apunte containing all rows from db */
- public function all(){ 
+ public function all(){
    $arraytoret = array();
    $query='select *
      from Apunte';
@@ -109,9 +117,34 @@ class Apunte{
 /* saves to db */
  public function save() {
     $this->destroy();
-   $query = 'insert into Apunte (apunte_id,mat_id,anho_academico,apunte_name,file_name) values ("'.$this->getApunte_id().'","'.$this->getMat_id().'","'.$this->getAnho_academico().'","'.$this->getApunte_name().'","'.$this->getFile_name().'")';
+   $query = 'insert into Apunte (apunte_id,mat_id,anho_academico,apunte_name,ruta,user_id) values ("'.$this->getApunte_id().'","'.$this->getMat_id().'","'.$this->getAnho_academico().'","'.$this->getApunte_name().'","'.$this->getRuta().'","'.$this->getUser_id().'")';
    $this->driver->exec($query);
 }
+ public function create() {
+   $query = 'insert into Apunte (mat_id,anho_academico,apunte_name,ruta,user_id) values ("'.$this->getMat_id().'","'.$this->getAnho_academico().'","'.$this->getApunte_name().'","'.$this->getRuta().'","'.$this->getUser_id().'")';
+   $this->driver->exec($query);
+}
+// funciones custom hechas por fvieira
+  public function nombreAutor(){
+    $query = 'select * from Usuario where
+              Usuario.user_id = "'.$this->getUser_id().'"';
+    $result = $this->driver->exec($query);
+    return $result[0]['user_name'];
+  }
 
+  public function nombreMateria(){
+    $query = 'select * from Materia where
+              Materia.mat_id = "'.$this->getMat_id().'"';
+    $result = $this->driver->exec($query);
+    return $result[0]['mat_name'];
+  }
+
+  public function nombreTitulacion(){
+    $query = 'select Titulacion.tit_name from Titulacion, Materia where
+    Materia.mat_id = "'.$this->getMat_id().'" and
+    Titulacion.tit_id = Materia.tit_id';
+    $result = $this->driver->exec($query);
+    return $result[0]['tit_name'];
+  }
 }
 ?>

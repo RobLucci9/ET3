@@ -7,6 +7,11 @@
     <title><?php echo $title; ?></title>
     <link href="../views/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../views/css/main.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../views/js/jquery.js"></script>
+    <script src="../views/js/main.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../views/bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -20,10 +25,5 @@
     </div>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../views/js/jquery.js"></script>
-    <script src="../views/js/main.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../views/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

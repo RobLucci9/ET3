@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -67,7 +66,7 @@ class Pagina{
    $arraytoret = array();
    $query='select *
      from Pagina
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -92,6 +91,10 @@ class Pagina{
  public function save() {
     $this->destroy();
    $query = 'insert into Pagina (pag_id,pag_name,pag_desc) values ("'.$this->getPag_id().'","'.$this->getPag_name().'","'.$this->getPag_desc().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into Pagina (pag_name,pag_desc) values ("'.$this->getPag_name().'","'.$this->getPag_desc().'")';
    $this->driver->exec($query);
 }
 

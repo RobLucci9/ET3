@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -67,7 +66,7 @@ class Funcionalidad{
    $arraytoret = array();
    $query='select *
      from Funcionalidad
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -92,6 +91,10 @@ class Funcionalidad{
  public function save() {
     $this->destroy();
    $query = 'insert into Funcionalidad (fun_id,fun_name,fun_desc) values ("'.$this->getFun_id().'","'.$this->getFun_name().'","'.$this->getFun_desc().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into Funcionalidad (fun_name,fun_desc) values ("'.$this->getFun_name().'","'.$this->getFun_desc().'")';
    $this->driver->exec($query);
 }
 

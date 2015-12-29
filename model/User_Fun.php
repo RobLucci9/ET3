@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -58,7 +57,7 @@ class User_fun{
    $arraytoret = array();
    $query='select *
      from User_Fun
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -83,6 +82,10 @@ class User_fun{
  public function save() {
     $this->destroy();
    $query = 'insert into User_Fun (user_id,fun_id) values ("'.$this->getUser_id().'","'.$this->getFun_id().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into User_Fun (fun_id) values ("'.$this->getFun_id().'")';
    $this->driver->exec($query);
 }
 

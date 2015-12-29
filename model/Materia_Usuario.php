@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -54,17 +53,17 @@ class Materia_usuario{
  }
 
  /* return an array containing all Materia_Usuario that key = value */
- public function findBy($key,$value){ 
+ public function findBy($key,$value){
    $arraytoret = array();
    $query='select *
      from Materia_Usuario
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
 
 /* returns an array of Materia_Usuario containing all rows from db */
- public function all(){ 
+ public function all(){
    $arraytoret = array();
    $query='select *
      from Materia_Usuario';
@@ -75,13 +74,17 @@ class Materia_usuario{
 /* deletes from db */
  public function destroy(){
    $query = 'delete from Materia_Usuario where
-   mat_id = "'.$this->getMat_id().'"';
+   mat_id = "'.$this->getMat_id().'" and user_id = "'.$this->getUser_id().'"';
    $this->driver->exec($query);
  }
 
 /* saves to db */
  public function save() {
     $this->destroy();
+   $query = 'insert into Materia_Usuario (mat_id,user_id) values ("'.$this->getMat_id().'","'.$this->getUser_id().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
    $query = 'insert into Materia_Usuario (mat_id,user_id) values ("'.$this->getMat_id().'","'.$this->getUser_id().'")';
    $this->driver->exec($query);
 }

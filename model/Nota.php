@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -85,7 +84,7 @@ class Nota{
    $arraytoret = array();
    $query='select *
      from Nota
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -110,6 +109,10 @@ class Nota{
  public function save() {
     $this->destroy();
    $query = 'insert into Nota (nota_id,nota_name,fecha,contenido,user_id) values ("'.$this->getNota_id().'","'.$this->getNota_name().'","'.$this->getFecha().'","'.$this->getContenido().'","'.$this->getUser_id().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into Nota (nota_name,fecha,contenido,user_id) values ("'.$this->getNota_name().'","'.$this->getFecha().'","'.$this->getContenido().'","'.$this->getUser_id().'")';
    $this->driver->exec($query);
 }
 

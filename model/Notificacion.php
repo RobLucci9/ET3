@@ -1,6 +1,5 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
 
@@ -10,14 +9,14 @@ class Notificacion{
  private $notificacion_id;
  private $fecha;
  private $contenido;
- private $user_name;
+ private $user_id;
 
  public function Notificacion($driver) {
  /* BE CARE the ORM and activeRecord functionality of boroto generted classes needs an Drive Class with a function exec that executes SQL queries and returns arrayassoc or arrays of arrayassoc */
    $this->notificacion_id = null;
    $this->fecha = null;
    $this->contenido = null;
-   $this->user_name = null;
+   $this->user_id = null;
    $this->driver = $driver;
  }
 
@@ -26,7 +25,7 @@ class Notificacion{
   $this->setNotificacion_id($arrayassoc['notificacion_id']);
   $this->setFecha($arrayassoc['fecha']);
   $this->setContenido($arrayassoc['contenido']);
-  $this->setUser_name($arrayassoc['user_name']);
+  $this->setUser_id($arrayassoc['user_id']);
  }
 
 /* Getters... */
@@ -39,8 +38,8 @@ class Notificacion{
  public function getContenido(){
    return $this->contenido;
  }
- public function getUser_name(){
-   return $this->user_name;
+ public function getUser_id(){
+   return $this->user_id;
  }
 
 /* Setters... */
@@ -53,8 +52,8 @@ class Notificacion{
  public function setContenido($value){
    $this->contenido = $value;
  }
- public function setUser_name($value){
-   $this->user_name = $value;
+ public function setUser_id($value){
+   $this->user_id = $value;
  }
 
 
@@ -76,7 +75,7 @@ class Notificacion{
    $arraytoret = array();
    $query='select *
      from Notificacion
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
@@ -100,7 +99,11 @@ class Notificacion{
 /* saves to db */
  public function save() {
     $this->destroy();
-   $query = 'insert into Notificacion (notificacion_id,fecha,contenido,user_name) values ("'.$this->getNotificacion_id().'","'.$this->getFecha().'","'.$this->getContenido().'","'.$this->getUser_name().'")';
+   $query = 'insert into Notificacion (notificacion_id,fecha,contenido,user_id) values ("'.$this->getNotificacion_id().'","'.$this->getFecha().'","'.$this->getContenido().'","'.$this->getUser_id().'")';
+   $this->driver->exec($query);
+}
+ public function create() {
+   $query = 'insert into Notificacion (fecha,contenido,user_id) values ("'.$this->getFecha().'","'.$this->getContenido().'","'.$this->getUser_id().'")';
    $this->driver->exec($query);
 }
 

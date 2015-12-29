@@ -1,8 +1,9 @@
 <?php
 /* the ORM and activeRecord needs a driver. it should be named driver.php */
-require 'driver.php';
 /* class generated automaticaly with Boroto */
 /* Felipe Vieira, 2015 */
+
+require_once 'Materia.php';
 
 class Titulacion{
 
@@ -54,17 +55,17 @@ class Titulacion{
  }
 
  /* return an array containing all Titulacion that key = value */
- public function findBy($key,$value){ 
+ public function findBy($key,$value){
    $arraytoret = array();
    $query='select *
      from Titulacion
-     where '.$key.'='.$value;
+     where '.$key.'="'.$value.'"';
    $results = $this->driver->exec($query);
    return $this->factory($results);
 }
 
 /* returns an array of Titulacion containing all rows from db */
- public function all(){ 
+ public function all(){
    $arraytoret = array();
    $query='select *
      from Titulacion';
@@ -85,6 +86,16 @@ class Titulacion{
    $query = 'insert into Titulacion (tit_id,tit_name) values ("'.$this->getTit_id().'","'.$this->getTit_name().'")';
    $this->driver->exec($query);
 }
-
+ public function create() {
+   $query = 'insert into Titulacion (tit_name) values ("'.$this->getTit_name().'")';
+   $this->driver->exec($query);
+}
+// funcion custom
+  public function materias(){
+    $toret = new Materia($this->driver);
+    $query = 'select * from Materia where Materia.tit_id = "'.$this->getTit_id().'"';
+    $results = $this->driver->exec($query);
+    return $toret->factory($results);
+  }
 }
 ?>
