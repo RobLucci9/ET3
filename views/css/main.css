@@ -1,0 +1,35 @@
+body{
+  /*background-image: url("../media/wood3.jpg");*/
+}
+.box {
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.elem{
+}
+.derecha{
+  float: right;
+  align-items: center;
+
+}
+.centro{
+  text-align: justify;
+}
+.izquierda{
+  float: left;
+}
+.apunte {
+  font-size: 22px;
+}
+.fecha {
+  font-size: 12px;
+  font-style: italic;
+}
+.banner{
+  text-align: center;
+}
+.autor{
+  text-align: left;
+}
