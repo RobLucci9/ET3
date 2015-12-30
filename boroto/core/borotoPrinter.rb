@@ -29,7 +29,6 @@ class BorotoPrinter
   def printClass
     put "<?php"
     put "/* the ORM and activeRecord needs a driver. it should be named driver.php */"
-    put "require 'driver.php';"
     put "/* class generated automaticaly with Boroto */"
     put "/* Felipe Vieira, 2015 */"
     put ""
@@ -148,7 +147,7 @@ class BorotoPrinter
       #  put "   #{atribute}"
       #end
       put "     from #{@borotoClass.name}"
-      put "     where '.$key.'='.$value;"
+      put "     where '.$key.'=\"'.$value.'\"';"
       put "   $results = $this->driver->exec($query);"
       put "   return $this->factory($results);"
       put "}"
@@ -184,6 +183,12 @@ class BorotoPrinter
     end
     put " public function save() {"
     put "    $this->destroy();"
+    put "   $query = 'insert into #{@borotoClass.name} (#{@borotoClass.atributes.join(",")}) values (#{buffer.join(",")})';"
+    put "   $this->driver->exec($query);"
+    put "}"
+    buffer.shift
+    @borotoClass.atributes.shift
+    put " public function create() {"
     put "   $query = 'insert into #{@borotoClass.name} (#{@borotoClass.atributes.join(",")}) values (#{buffer.join(",")})';"
     put "   $this->driver->exec($query);"
     put "}"

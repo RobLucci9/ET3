@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
   /*background-image: url("../media/wood3.jpg");*/
 }
@@ -33,3 +34,37 @@ body{
 .autor{
   text-align: left;
 }
+=======
+body{
+  /*background-image: url("../media/wood3.jpg");*/
+}
+.box {
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.elem{
+}
+.derecha{
+  float: right;
+  align-items: center;
+
+}
+.izquierda{
+  float: left;
+}
+.apunte {
+  font-size: 22px;
+}
+.fecha {
+  font-size: 12px;
+  font-style: italic;
+}
+.banner{
+  text-align: center;
+}
+.autor{
+  text-align: left;
+}
+>>>>>>> upstream/master
