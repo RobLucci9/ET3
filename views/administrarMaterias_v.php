@@ -19,10 +19,10 @@
   <p class="lead"> Todas las materias </p>
   <p> Aqui se muestran todas las materias disponibles. Si no encuentra su materia contacte con un administrador</p>
   <hr/>
-<form action="../controllers/delmat.php" class="header box-main" method="post">
+<form action="../controllers/bajaMateria.php" class="header box-main" method="post">
       <?php  foreach ($allMaterias as $key): ?>
         <div class="row box itemtit">
-              <span class="izquierda"> <?php echo $key->getMat_name(); ?></span>
+              <span class="izquierda"> <?php echo $key->getMat_name(); ?></span> 
               <span> <?php echo $titulos[0]->findBy("tit_id",$key->getTit_id())[0]->getTit_Name();?></span>
               <span class="derecha" ><button type="submit" class="btn btn-success" name="<?php echo $key->getMat_id(); ?>">Eliminar
             </button></span>

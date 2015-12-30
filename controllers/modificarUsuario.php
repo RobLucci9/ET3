@@ -11,27 +11,27 @@
   $renderMain = new TemplateEngine(); //plantilla main
   $renderModificacion = new TemplateEngine(); // plantilla del registro
   $renderModificacion->status = "<br/>"; //Se usa este campo para mostrar mensajes de error o avisos, salto de línea por defecto
-  $db = Driver::getInstance();
-  $dbm = DBManager::getInstance();
-  $db->connect();
-  $dbm->connect();
+  $db = Driver::getInstance(); // inicializa BD
+  $dbm = DBManager::getInstance(); // inicializa DBManager de cancerbero
+  $db->connect(); // conecta a la BD
+  $dbm->connect(); // conecta a la BD
 
-  if(isset($_POST['pass'])){
-    $usuario = new Usuario($db);
-    $usuario = $usuario->findBy('user_name',$_SESSION['name']);
-    $usuario = $usuario[0];
-    $usuario->setUser_pass($_POST['pass']);
-    if(isset($_POST['name']) && isset($_POST['name']) && $dbm->existUserRol($_SESSION["name"],"AdminApuntorium")){
-      $usuario->setUser_name($_POST['name']);
-      $usuario->setUser_email($_POST['email']);
+  if(isset($_POST['pass'])){ // si se ha escrito una contraseña y se le dio a submit
+    $usuario = new Usuario($db); // inicializa objeto Usuario
+    $usuario = $usuario->findBy('user_name',$_SESSION['name']);// coge el usuario que corresponde con la sesion en la que está
+    $usuario = $usuario[0];// coge el primer usuario del array(solo hay uno)
+    $usuario->setUser_pass($_POST['pass']);// cambia la pass en el objeto Usuario
+    if(isset($_POST['name']) && isset($_POST['name']) && $dbm->existUserRol($_SESSION["name"],"AdminApuntorium")){ // si se ha escrito un nombre y un email, se le dio a submit y ademas el usuario es administrador
+      $usuario->setUser_name($_POST['name']);  //cambia el nombre en el objeto Usuario
+      $usuario->setUser_email($_POST['email']); // cambia el email en el objeto Usuario
     }
-    $usuario->save();
+    $usuario->save();// guarda la pass en la BD
     header("location: confirmacion.php"); //correcto
   }
 
-  $renderMain->title = "modificacion";
-  $renderMain->navbar = renderNavBar();
-  $renderMain->content = $renderModificacion->render('modificarUsuario_v.php');
+  $renderMain->title = "modificacion";//Titulo y cabecera de la pagina
+  $renderMain->navbar = renderNavBar();//Inserción de navBar en la pagina. Omitible si no la necesita
+  $renderMain->content = $renderModificacion->render('modificarUsuario_v.php');//Inserción del contenido de la página
   echo $renderMain->renderMain(); //renderiza y muestra al user
 
  ?>
